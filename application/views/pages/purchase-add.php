@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="col-sm-1">
                                         <div class="md-input-wrapper multisugg">
-                                            <input type="text" name="hsn-code[]" placeholder="HSN" class="md-form-control required">
+                                            <input type="text" name="hsn-code" placeholder="HSN" class="md-form-control required">
                                         </div>
                                     </div>
                                     <div class="col-sm-1">

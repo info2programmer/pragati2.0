@@ -438,5 +438,74 @@ $this->load->model('base_model');
 	}
 	
 	}
+
+	// This Function For Get Item By Barcode
+	public function get_item()
+	{
+		$barcode=$this->input->post('barcode');
+		$item=$this->base_model->get_barcode_item($barcode);
+
+		// echo $this->db->last_query();
+		// die;
+
+		// var_dump($item);
+		// die;
+
+		$data = array(
+			'id' => $item[0]['item_id'],
+			'qty' => 1,
+			'price' => $item[0]['item_s_price']/$item[0]['item_p_qty'],
+			'name' => $item[0]['item_name'],
+			'hsn' => $item[0]['hsn'],
+			'sgst' => $item[0]['item_s_gst'],
+			'cgst' => $item[0]['item_s_sgst'],
+			'unit' => $item[0]['unit'],
+			'maxquentity' => $item[0]['item_p_qty']
+		);
+			
+		$this->cart->insert($data);
+		// $return_json = array('status'=>1,'student_arr'=>$this->cart->contents());
+		// echo json_encode($return_json);
+
+		foreach ($this->cart->contents() as $item) {
+			 $sub=(float)$item['subtotal']+((float)$item['subtotal']*((float)$item['sgst']+(float)$item['cgst'])/100);
+			echo "
+			<tr>
+				<td>".$item['name']."</td>
+				<td>".$item['price']."</td>
+				<td><input type='text' value='".$item['qty']."' class='qty' style='max-width:16%;text-align:center'></td>
+				<td>".$item['unit']."</td>
+				<td>".$item['sgst']."</td>
+				<td>".$item['cgst']."</td>
+				<td>".$sub."</td>
+			</tr>"; 
+		}
+	}
+
+	// This Function For Update Cart Quentity
+	public function update_sell_item_quentity()
+	{
+		$rowId=$this->input->post('rowid');
+		$quentity=$this->input->post('qty');
+		$data = array(
+			'rowid'  => $rowId,
+			'qty'  => $quentity
+			);
+		$this->cart->update($data);
+
+		foreach ($this->cart->contents() as $item) {
+			 $sub=(float)$item['subtotal']+((float)$item['subtotal']*((float)$item['sgst']+(float)$item['cgst'])/100);
+			echo "
+			<tr>
+				<td>".$item['name']."</td>
+				<td>".$item['price']."</td>
+				<td><input type='text' value='".$item['qty']."' class='qty' style='max-width:16%;text-align:center'></td>
+				<td>".$item['unit']."</td>
+				<td>".$item['sgst']."</td>
+				<td>".$item['cgst']."</td>
+				<td>".$sub."</td>
+			</tr>"; 
+		}
+	}
 		
 }

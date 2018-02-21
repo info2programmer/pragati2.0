@@ -1,3 +1,5 @@
+<?php // $this->cart->destroy();
+ ?>
 <!-- Container-fluid starts -->
 <div class="container-fluid">
 
@@ -37,117 +39,63 @@
               
                     <div class="card-block">
                         <div class="row">
+
+                            <div class="col-sm-4">
+                                <!-- <div class="md-input-wrapper multisugg">
+                                    <div class="md-input-wrapper">
+                                        <input type="text" class="md-form-control" placeholder="Scan Barcode Here" name="cname"/>
+                                        
+                                    </div>
+                                </div> -->
+                            </div>
+
                             <div class="col-sm-4">
                                 <div class="md-input-wrapper multisugg">
-                                    <div class="md-input-wrapper multisugg">
-                                        <input type="text" class="md-form-control" placeholder="Customer Name" name="cname"/>
-                                        <ul class="md-form-control">
-                                        <?php foreach($customer as $client){?>
-                                            <li><?php echo $client['clname'];?>-<?php echo $client['cl_id'];?></li>
-                                            <?php } ?>
-                                            
-                                        </ul>
+                                    <div class="md-input-wrapper">
+                                        <input type="text" class="md-form-control" placeholder="Scan Barcode Here" id="barcode" autofocus/>
                                     </div>
                                 </div>
-                            </div>
-                             <div class="col-sm-4">
-                                <div class="md-input-wrapper multisugg">
-                                    <div class="md-input-wrapper multisugg">
-                                        <input type="text" class="md-form-control" placeholder="Sales Person Name" name="empname"/>
-                                        <ul class="md-form-control">
-                                            <?php foreach($slperson as $persn){?>
-                                            <li><?php echo $persn['name'];?>-<?php echo $persn['emp_id'];?></li>
-                                            <?php } ?>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                              <div class="col-sm-4">
-                                <div class="md-input-wrapper multisugg">
-                                    <div class="md-input-wrapper multisugg">
-                                       Sale Date : <input type="date" class="md-form-control" placeholder="Sale Date" name="sl_date"/>
-                                       
-                                    </div>
-                                </div>
-                                
                             </div>
                         </div>
+                        
                         <div class="row">
+                            <h2 align="center">Item('s)</h2>
                             <div class="col-xs-12 bill-item-list">
-
-                                <!-- this is the last one with add button -->
                                 <div class="row">
-                                <input type="hidden" name="hid_sourav_distinguish[]" />
-                                    <div class="col-sm-2">
-                                        <div class="md-input-wrapper multisugg">
-                                         
-                                            <input type="text" class="md-form-control" placeholder="Item Name" name="item-name[]" />
-                                            <ul class="md-form-control">
-                                             <?php foreach($items as $itemN){?>
-                                                <li data-price="<?php echo $itemN['item_single_sale_wogst'];?>" data-gst="<?php echo $itemN['item_s_gst'];?>" data-ost="<?php echo $itemN['item_s_sgst'];?>"><?php echo $itemN['item_name'];?></li>
-                                                <?php }?>
-                                                
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <input type="text" class="md-form-control" placeholder="Sale Price" name="item-price[]" readonly />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <input type="text" class="md-form-control" placeholder="Quantity" name="item-quantity[]" oninput="calcRow(this)" />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <select class="md-form-control required" name="item_qunit[]">
-                                                        <option value="">Unit</option>
-                                                        <?php foreach($unit as $unitn){?>
-                                                        <option value="<?php echo $unitn['uid'];?>"><?php echo $unitn['stname'];?></option>
-                                                        <?php }?>
-                                                    </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <input type="text" class="md-form-control" placeholder="SGST" name="item-gst[]" oninput="calcRow(this)" />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <input type="text" class="md-form-control" placeholder="SGST Amt" name="item-gst-amt[]" readonly />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <input type="text" class="md-form-control" placeholder="CGST" name="item-cgst[]" oninput="calcRow(this)" />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <input type="text" class="md-form-control" placeholder="CGST Amt" name="item-cgst_amt[]" readonly />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-1">
-                                        <div class="md-input-wrapper">
-                                            <input type="text" class="md-form-control" placeholder="Total" name="item-total[]" readonly />
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <button type="button" class="btn btn-success waves-effect waves-light m-t-10 m-r-5" onclick="addItemRow(this)">
-                                            <i class="icofont icofont-plus"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-danger waves-effect waves-light m-t-10" onclick="removeItemRow(this)">
-                                            <i class="icofont icofont-minus"></i>
-                                        </button>
-                                    </div>
+                                <table class="table table-dark">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">Item Name</th>
+                                        <th scope="col">Sale Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Unit</th>
+                                        <th scope="col">S-GST</th>
+                                        <th scope="col">C-GST</th>
+                                        <th scope="col">Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="content_bill">
+                                        <?php
+                                        foreach ($this->cart->contents() as $item) {
+                                            $sub=(float)$item['subtotal']+((float)$item['subtotal']*((float)$item['sgst']+(float)$item['cgst'])/100);
+                                            echo "
+                                            <tr>
+                                                <td>".$item['name']."</td>
+                                                <td>".$item['price']."</td>
+                                                <td><input type='text' value='".$item['qty']."' class='qty' style='max-width:16%;text-align:center' data-rowid='".$item['rowid']."' data-maxquentity='".$item['maxquentity']."' data-crnt='".$item['qty']."'></td>
+                                                <td>".$item['unit']."</td>
+                                                <td>".$item['sgst']."</td>
+                                                <td>".$item['cgst']."</td>
+                                                <td>".$sub."</td>
+                                            </tr>"; 
+                                        }                                              
+                                        ?>
+                                    </tbody>
+                                </table>
                                 </div>
-                                <!-- /this is the last one with add button -->
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-sm-8 text-right p-t-15">
                                 Discount
                             </div>
@@ -156,8 +104,8 @@
                                     <input type="text" class="md-form-control" placeholder="Discount" name="discount" oninput="calcDiscount()" />
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
+                        </div> -->
+                        <!-- <div class="row">
                             <div class="col-sm-8 text-right p-t-15">
                                 Net Total
                             </div>
@@ -166,9 +114,9 @@
                                     <input type="text" class="md-form-control" placeholder="Net Total" name="all-total" />
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <button type="submit" class="btn btn-success waves-effect waves-light m-r-30">Submit</button>
+                        <!-- <button type="submit" class="btn btn-success waves-effect waves-light m-r-30">Submit</button> -->
                     </div>
                 </form>
             </div>
@@ -177,193 +125,53 @@
 
 </div>
 <!-- Container-fluid ends -->
+
 <script>
-	function roundToTwo(num) {    
-		return +(Math.round(num + "e+2")  + "e-2");
-	}
-    var trgul;
-    $('.multisugg input').on('focus', function () {
-        $(this).parent().find('ul').addClass('open');
-        $(this).parent().addClass('focused');
-    });
-    $('.multisugg input').on('blur', function () {
-        trgul = $(this).parent().find('ul');
-        function clth() {
-            trgul.removeClass('open');
-            trgul.parent().removeClass('focused');
-        }
-
-        setTimeout(clth, 200);
-    });
-    $('.multisugg input').on('input', function () {
-        lismv = $(this).val().toLowerCase();
-        $(this).parent().find('li').each(function () {
-            if (~$(this).text().toLowerCase().search(lismv) && lismv) {
-                $(this).show()
-            } else {
-                $(this).hide()
-            }
-        });
-    });
-    $('.multisugg li').on('click', function () {
-        console.log($(this).parent().parent().find('input').val());
-        $(this).parent().parent().find('input').val($(this).text());
-        $(this).parent().parent().parent().next().find('input').val($(this).data('price'));
-		$(this).parent().parent().parent().parent().find('[name*=hid_sourav_distinguish]').val($(this).data('price'));
-		console.log($(this).parent().parent().parent().parent().find('[name*=hid_sourav_distinguish]').val());
-		$(this).parent().parent().parent().next().next().next().next().find('input').val($(this).data('gst'));
-		$(this).parent().parent().parent().next().next().next().next().next().next().find('input').val($(this).data('ost'));
-    });
-
-    function calcRow(ths) {
-        quantity = parseInt($(ths).closest(".row").find("[name='item-quantity[]']").val()) || 0;
-        sgst = parseFloat($(ths).closest(".row").find("[name='item-gst[]']").val()) || 0;
-        cgst = parseFloat($(ths).closest(".row").find("[name='item-cgst[]']").val()) || 0;
-        price = parseFloat($(ths).closest(".row").find("[name='item-price[]']").val()) || 0;
-        console.log(price);
-        console.log(quantity);
-        console.log(sgst);
-        console.log(cgst);
-        sgst_amt = (price * quantity * sgst) / 100;
-        console.log(sgst_amt);
-        $(ths).closest(".row").find("[name='item-gst-amt[]']").val(roundToTwo(sgst_amt));
-        cgst_amt = (price * quantity * cgst) / 100;
-        console.log(cgst_amt);
-        $(ths).closest(".row").find("[name='item-cgst_amt[]']").val(roundToTwo(cgst_amt));
-        item_total = (price * quantity) + sgst_amt + cgst_amt;
-        console.log(item_total);
-        $(ths).closest(".row").find("[name='item-total[]']").val(roundToTwo(item_total));
-
-        calcDiscount();
-    }
-
-    function calcDiscount() {
-        all_total = 0;
-        $('[name*="item-total"]').each(function () {
-            all_total += parseFloat($(this).val());
-        });
-        discount = parseFloat($("[name=discount]").val()) || 0;
-        all_total -= discount;
-        $("[name=all-total]").val(roundToTwo(all_total));
-    }
-
-    function addItemRow(ths) {
-        ths = $(ths);
-        addable = '<div class="row">'
-			+ '<input type="hidden" name="hid_sourav_distinguish[]" />'
-            + '<div class="col-sm-2">'
-            + '<div class="md-input-wrapper multisugg">'
-            + '<input type="text" class="md-form-control" placeholder="Item Name" name="item-name[]" /><span class="md-line"></span>'
-            + '<ul class="md-form-control">'
-			<?php foreach($items as $itemN){?>
-            + '<li data-price="<?php echo $itemN['item_single_sale_wogst'];?>" data-gst="<?php echo $itemN['item_s_gst'];?>" data-ost="<?php echo $itemN['item_s_sgst'];?>"><?php echo $itemN['item_name'];?></li>'
-            <?php }?>
-            + '</ul>'
-            + '</div>'
-            + '</div>'
-            + '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<input type="text" class="md-form-control" placeholder="Sale Price" name="item-price[]" readonly /><span class="md-line"></span>'
-            + '</div>'
-            + '</div>'
-            + '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<input type="text" class="md-form-control" placeholder="Quantity" name="item-quantity[]" oninput="calcRow(this)" /><span class="md-line"></span>'
-            + '</div>'
-            + '</div>'
-            + '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<select class="md-form-control" name="item_qunit[]">'
-            + '<option value="">Select</option>'
-			<?php foreach($unit as $unitn){?>
-            + '<option value="<?php echo $unitn['uid'];?>"><?php echo $unitn['stname'];?></option>'
-            <?php }?>
-            + '</select>'
-            + '</div>'
-            + '</div>'
-            + '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<input type="text" class="md-form-control" placeholder="SGST" name="item-gst[]" oninput="calcRow(this)" /><span class="md-line"></span>'
-            + '</div>'
-            + '</div>'
-			+ '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<input type="text" class="md-form-control" placeholder="SGST Amt" name="item-gst-amt[]" readonly /><span class="md-line"></span>'
-            + '</div>'
-            + '</div>'
-			+ '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<input type="text" class="md-form-control" placeholder="CGST" name="item-cgst[]" oninput="calcRow(this)" /><span class="md-line"></span>'
-            + '</div>'
-            + '</div>'
-			+ '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<input type="text" class="md-form-control" placeholder="CGST Amt" name="item-cgst_amt[]" readonly /><span class="md-line"></span>'
-            + '</div>'
-            + '</div>'
-            + '<div class="col-sm-1">'
-            + '<div class="md-input-wrapper">'
-            + '<input type="text" class="md-form-control" placeholder="Total" name="item-total[]" readonly /><span class="md-line"></span>'
-            + '</div>'
-            + '</div>'
-            + '<div class="col-sm-2">'
-            + '<button type="button" class="btn btn-success waves-effect waves-light m-t-10 m-r-5" onclick="addItemRow(this)">'
-            + '<i class="icofont icofont-plus"></i>'
-            + '</button>'
-            + '<button type="button" class="btn btn-danger waves-effect waves-light m-t-10" onclick="removeItemRow(this)">'
-            + '<i class="icofont icofont-minus"></i>'
-            + '</button>'
-            + '</div>'
-            + '</div>';
-        ths.parent().parent().parent().append(addable);
-        ths.remove();
-        $('.multisugg input').on('focus', function () {
-            $(this).parent().find('ul').addClass('open');
-            $(this).parent().addClass('focused');
-        });
-        $('.multisugg input').on('blur', function () {
-            trgul = $(this).parent().find('ul');
-            function clth() {
-                trgul.removeClass('open');
-                trgul.parent().removeClass('focused');
-            }
-
-            setTimeout(clth, 200);
-        });
-        $('.multisugg input').on('input', function () {
-            lismv = $(this).val().toLowerCase();
-            $(this).parent().find('li').each(function () {
-                if (~$(this).text().toLowerCase().search(lismv) && lismv) {
-                    $(this).show()
-                } else {
-                    $(this).hide()
+    $('#barcode').on('input',function(e) { 
+        if($('#barcode').val()!=""){
+            var urls='<?php echo base_url() ?>view/get_item/';
+            var datas={'barcode':$('#barcode').val()};
+            $.ajax({
+                type: "post",
+                url: urls,
+                data: datas,
+                dataType: "html",
+                success: function (response) {
+                    $('#content_bill').html(response);
+                //    console.log(response);
                 }
             });
-        });
-        $('.multisugg li').on('click', function () {
-            console.log($(this).parent().parent().find('input').val());
-            $(this).parent().parent().find('input').val($(this).text());
-            $(this).parent().parent().parent().next().find('input').val($(this).data('price'));
-            $(this).parent().parent().parent().parent().find('[name*=hid_sourav_distinguish]').val($(this).data('price'));
-            console.log($(this).parent().parent().parent().parent().find('[name*=hid_sourav_distinguish]').val());
-            $(this).parent().parent().parent().next().next().next().next().find('input').val($(this).data('gst'));
-			$(this).parent().parent().parent().next().next().next().next().next().next().find('input').val($(this).data('ost'));
-        });
-    }
-    function removeItemRow(ths) {
-        ths = $(ths);
-        ths.parent().parent().remove();
-        addable = '<div class="col-sm-2">'
-            +'<button type="button" class="btn btn-success waves-effect waves-light m-t-10 m-r-5" onclick="addItemRow(this)">'
-            + '<i class="icofont icofont-plus"></i>'
-            + '</button>'
-            + '<button type="button" class="btn btn-danger waves-effect waves-light m-t-10" onclick="removeItemRow(this)">'
-            + '<i class="icofont icofont-minus"></i>'
-            + '</button>'
-            + '</div>';
-        $('.bill-item-list').children().last().children().last().remove();
-        $('.bill-item-list').children().last().append(addable);
-        calcDiscount();
-    }
+        }        
+    });
+
+    $('.qty').on('input',function(e) { 
+        // console.log(e.currentTarget.value);
+        var update_qty=e.currentTarget.value;
+        if(update_qty!=""){
+            var rowId=$('.qty').data("rowid");
+            var maxQty=$('.qty').data("maxquentity");
+            var crnt=$('.qty').data("crnt");
+            if(update_qty>maxQty){
+                alert('maximum quentity must same or similar then current quentity');
+                e.currentTarget.value=crnt;
+                return;
+            }
+            else{
+                var datas={'rowid' : rowId, 'qty':update_qty };
+                var urls='<?php echo base_url(); ?>view/update_sell_item_quentity';
+
+                $.ajax({
+                    type: "post",
+                    url: urls,
+                    data: datas,
+                    dataType: "html",
+                    success: function (response) {
+                        $('#content_bill').html(response);
+                    }
+                });
+            }
+        }
+    });
 </script>
+
  

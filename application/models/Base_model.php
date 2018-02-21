@@ -282,6 +282,17 @@ return true;
        
    }
 
+//    This Function For Get Purcha Items Using Barcode
+   public function get_barcode_item($barcode)
+   {
+       $this->db->where('barcode', $barcode);
+       $this->db->select('td_purchase_item.*, td_unit.stname as unit');
+       $this->db->from('td_purchase_item');
+       $this->db->join('td_unit', 'td_purchase_item.item_p_unit = td_unit.uid', 'inner');
+       $query=$this->db->get();
+       return $query->result_array();       
+   }
+
 }
 
 ?>
