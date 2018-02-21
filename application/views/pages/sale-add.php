@@ -144,10 +144,10 @@
         }        
     });
 
-    $('.qty').on('input',function(e) { 
+    $('.qty').on('keyup',function(e) { 
         // console.log(e.currentTarget.value);
         var update_qty=e.currentTarget.value;
-        if(update_qty!=""){
+        if(update_qty!="" && update_qty!=0){
             var rowId=$('.qty').data("rowid");
             var maxQty=$('.qty').data("maxquentity");
             var crnt=$('.qty').data("crnt");
