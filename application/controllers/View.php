@@ -473,7 +473,7 @@ $this->load->model('base_model');
 			<tr>
 				<td>".$item['name']."</td>
 				<td>".$item['price']."</td>
-				<td><input type='text' value='".$item['qty']."' class='qty' style='max-width:16%;text-align:center'></td>
+				<td><input type='text' value='".$item['qty']."' class='qty' style='max-width:16%;text-align:center' data-rowid='".$item['rowid']."' data-maxquentity='".$item['maxquentity']."' data-crnt='".$item['qty']."'></td>
 				<td>".$item['unit']."</td>
 				<td>".$item['sgst']."</td>
 				<td>".$item['cgst']."</td>
@@ -482,7 +482,7 @@ $this->load->model('base_model');
 		}
 	}
 
-	// This Function For Update Cart Quentity
+	// This Function For Update Item Quentity
 	public function update_sell_item_quentity()
 	{
 		$rowId=$this->input->post('rowid');
@@ -499,13 +499,19 @@ $this->load->model('base_model');
 			<tr>
 				<td>".$item['name']."</td>
 				<td>".$item['price']."</td>
-				<td><input type='text' value='".$item['qty']."' class='qty' style='max-width:16%;text-align:center'></td>
+				<td><input type='text' value='".$item['qty']."' class='qty' style='max-width:16%;text-align:center' data-rowid='".$item['rowid']."' data-maxquentity='".$item['maxquentity']."' data-crnt='".$item['qty']."'></td>
 				<td>".$item['unit']."</td>
 				<td>".$item['sgst']."</td>
 				<td>".$item['cgst']."</td>
 				<td>".$sub."</td>
 			</tr>"; 
 		}
+	}
+
+	// This Function To Clear All Item
+	public function clear_item()
+	{
+		$this->cart->destroy();
 	}
 		
 }

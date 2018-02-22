@@ -1,6 +1,26 @@
 <?php // $this->cart->destroy();
  ?>
 <!-- Container-fluid starts -->
+<style>
+    .cart-plus{
+        float: left;
+        width: 17px;
+        margin: 5px 0 0;
+        color: #373d54;
+        text-align: center;
+        line-height: 1;
+        font-size: 14px;
+    }
+    .cart-minus{
+        float: left;
+        border-top: none;
+        width: 17px;
+        color: #373d54;
+        text-align: center;
+        line-height: 1;
+        font-size: 14px;
+    }
+</style>
 <div class="container-fluid">
 
     <!-- Header start -->
@@ -62,6 +82,9 @@
                             <h2 align="center">Item('s)</h2>
                             <div class="col-xs-12 bill-item-list">
                                 <div class="row">
+                                <p align="right">
+                                <button type="button" id="btnClear" class="btn btn-danger">Clear All</button>
+                                </p>
                                 <table class="table table-dark">
                                     <thead>
                                         <tr>
@@ -92,6 +115,9 @@
                                         ?>
                                     </tbody>
                                 </table>
+                                 <p align="right">
+                                    <button type="button" id="btnSave" class="btn btn-success" style="margin-right:20px;">Save</button>
+                                </p>
                                 </div>
                             </div>
                         </div>
@@ -127,7 +153,9 @@
 <!-- Container-fluid ends -->
 
 <script>
-    $('#barcode').on('input',function(e) { 
+
+
+    $(document).on('input','#barcode',function(e) { 
         if($('#barcode').val()!=""){
             var urls='<?php echo base_url() ?>view/get_item/';
             var datas={'barcode':$('#barcode').val()};
@@ -138,19 +166,26 @@
                 dataType: "html",
                 success: function (response) {
                     $('#content_bill').html(response);
-                //    console.log(response);
+                    $('#barcode').val("");
+                    $('#barcode').focus();
+                    $(this).fadeOut(100);
                 }
             });
-        }        
+        }
+        return false;        
     });
 
-    $('.qty').on('keyup',function(e) { 
-        // console.log(e.currentTarget.value);
+    // $('.qty').change(function (e) { 
+        
+        
+    // });
+
+    $(document).on('input','.qty',function(e) { 
         var update_qty=e.currentTarget.value;
-        if(update_qty!="" && update_qty!=0){
-            var rowId=$('.qty').data("rowid");
-            var maxQty=$('.qty').data("maxquentity");
-            var crnt=$('.qty').data("crnt");
+        if(update_qty!=""){
+            var rowId=$(this).attr('data-rowid');
+            var maxQty=$(this).attr('data-maxquentity');
+            var crnt=$(this).attr('data-crnt');
             if(update_qty>maxQty){
                 alert('maximum quentity must same or similar then current quentity');
                 e.currentTarget.value=crnt;
@@ -169,8 +204,32 @@
                         $('#content_bill').html(response);
                     }
                 });
+                return;
             }
         }
+        $(this).fadeOut(100);
+    });
+
+    $('#btnClear').click(function (e) { 
+        if(confirm('are you sure to clear?')){
+            var urls="<?php echo base_url() ?>view/clear_item";
+           $.ajax({
+               type: "post",
+               url: urls,
+               success: function (response) {
+                   $('#content_bill').html("");
+               }
+           });
+        }
+        else{
+            return;
+        }
+    });
+
+    // This Function For Sell Items
+    $('#btnSave').click(function (e) { 
+        var urls="<?php echo base_url() ?>"
+        
     });
 </script>
 
